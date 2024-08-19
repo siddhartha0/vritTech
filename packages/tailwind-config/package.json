@@ -1,0 +1,7 @@
+{
+  "name": "tailwind-config",
+  "version": "1.0",
+  "files": [
+    "tailwind.config.js"
+  ]
+}
