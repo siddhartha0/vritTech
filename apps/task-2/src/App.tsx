@@ -1,6 +1,7 @@
 import { useUser } from "./hook/fetch-user";
 import companyLogo from "./assets/companyLogo.svg";
 import { Table } from "./components/";
+import React from "react";
 
 const App = () => {
   const { err, userList, loading } = useUser();

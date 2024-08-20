@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import { TableHeader } from "../../const/table-header";
 
+export interface tableHeaderPropTypes {
+  firstName: string;
+  lastName: string;
+  username: string;
+  age: string;
+  email: string;
+  phone: string;
+}
+
 interface tablePropTypes {
-  userList: [] | null;
+  userList: tableHeaderPropTypes[] | null;
 }
 
 export const Table = React.memo(({ userList }: tablePropTypes) => {
@@ -46,9 +55,9 @@ export const Table = React.memo(({ userList }: tablePropTypes) => {
         <tbody>
           {currentItems?.map((user, id) => (
             <tr key={id}>
-              {Object.keys(TableHeader).map((key, i) => (
+              {Object.keys(TableHeader).map((key: string, i) => (
                 <td className="border border-white p-8" key={key + i}>
-                  {user[key]}
+                  {(user as unknown as Record<string, string>)[key]}
                 </td>
               ))}
             </tr>

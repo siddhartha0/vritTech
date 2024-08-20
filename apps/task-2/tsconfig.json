@@ -1,7 +1,30 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true, // This is also recommended
+    "jsx": "react",
+    "baseUrl": "./",
+    "target": "ES2023",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "paths": {
+      "@components/*": ["src/components/*"] // Adjust based on your project structure
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "__test__/**/*.ts",
+    "__test__/**/*.tsx"
+  ],
+  "exclude": ["node_modules"]
 }

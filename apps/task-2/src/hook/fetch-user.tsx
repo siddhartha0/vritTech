@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { tableHeaderPropTypes } from "../components/table/table";
 
 export const useUser = () => {
-  const [userList, setUserList] = useState<null | []>(null);
+  const [userList, setUserList] = useState<tableHeaderPropTypes[] | null>(null);
   const [err, setErr] = useState<null | string>();
   const [loading, setLoading] = useState(true);
 
