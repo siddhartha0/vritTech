@@ -24,9 +24,7 @@ beforeEach(() => {
 });
 
 test("shows loading state", async () => {
-  (global.fetch as jest.Mock).mockImplementation(
-    () => new Promise(() => {}) // Promise that never resolves
-  );
+  (global.fetch as jest.Mock).mockImplementation(() => new Promise(() => {}));
 
   render(<App />);
 
