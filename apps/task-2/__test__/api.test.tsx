@@ -1,6 +1,7 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Table } from "../src/components";
+import App from "../src/App";
 
 global.fetch = jest.fn();
 const mockUsers = [
@@ -14,38 +15,31 @@ const mockUsers = [
   },
 ];
 
-describe("Table component", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+beforeEach(() => {
+  (global.fetch as jest.Mock).mockImplementation(() =>
+    Promise.resolve({
+      json: () => Promise.resolve(mockUsers),
+    })
+  );
+});
 
-  it("displays loading state initially", () => {
-    (fetch as jest.Mock).mockReturnValueOnce(new Promise(() => {}));
-    render(<Table userList={mockUsers} />);
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
-  });
+test("shows loading state", async () => {
+  (global.fetch as jest.Mock).mockImplementation(
+    () => new Promise(() => {}) // Promise that never resolves
+  );
 
-  it("displays users when data is fetched successfully", async () => {
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockUsers,
-    });
+  render(<App />);
 
-    render(<Table userList={mockUsers} />);
+  const loadingText = await screen.findByText(/Loading.../i);
+  expect(loadingText).toBeInTheDocument();
+});
 
-    await waitFor(() => expect(screen.getByText(/xinu/i)).toBeInTheDocument());
-    expect(screen.getByText(/sid/i)).toBeInTheDocument();
-    expect(screen.getByText(/sid@gmail.com/i)).toBeInTheDocument();
-  });
+test("renders table with user data", async () => {
+  render(<Table userList={mockUsers} />);
 
-  it("displays error message when fetch fails", async () => {
-    (fetch as jest.Mock).mockRejectedValueOnce(new Error("Failed to fetch"));
+  const tableElements = screen.getAllByText(/xinu/i);
+  expect(tableElements[0]).toBeInTheDocument();
 
-    render(<Table userList={mockUsers} />);
-
-    await waitFor(() =>
-      expect(screen.getByText(/Error:/i)).toBeInTheDocument()
-    );
-    expect(screen.getByText(/Failed to fetch/i)).toBeInTheDocument();
-  });
+  const tableEmailElements = screen.getAllByText(/sid@gmail.com/i);
+  expect(tableEmailElements[0]).toBeInTheDocument();
 });

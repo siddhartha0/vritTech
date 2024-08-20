@@ -19,7 +19,7 @@ export const useUser = () => {
       const result = await response.json();
       setUserList(result.users);
     } catch (error) {
-      setErr(error?.message ?? "Server has timedout, Please Wait!!");
+      setErr("Server has timedout, Please Wait!!");
     } finally {
       setLoading(false);
     }
