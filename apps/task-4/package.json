@@ -12,6 +12,7 @@
   "dependencies": {
     "@repo/ui": "*",
     "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.6",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "next": "^15.0.0-rc.0",
